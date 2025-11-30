@@ -39,21 +39,42 @@ if ($_SERVER['REQUEST_METHOD']==='POST') {
 <title>Edit User</title>
 <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body class="bg-gray-100 min-h-screen flex items-center justify-center">
-<div class="w-full max-w-md bg-white rounded shadow p-6">
-<h1 class="text-2xl font-semibold mb-4">Edit User</h1>
-<?php if($error): ?><div class="bg-red-100 text-red-700 p-3 rounded mb-4"><?php echo $error; ?></div><?php endif; ?>
-<form method="POST" class="space-y-4">
-<input type="text" name="name" placeholder="Name" value="<?php echo htmlspecialchars($user['name']); ?>" required class="w-full border rounded px-3 py-2"/>
-<input type="email" name="email" placeholder="Email" value="<?php echo htmlspecialchars($user['email']); ?>" required class="w-full border rounded px-3 py-2"/>
-<input type="password" name="password" placeholder="Password (leave blank to keep)" class="w-full border rounded px-3 py-2"/>
-<select name="role" required class="w-full border rounded px-3 py-2">
-<option value="admin" <?php if($user['role']==='admin') echo 'selected'; ?>>Admin</option>
-<option value="tutor" <?php if($user['role']==='tutor') echo 'selected'; ?>>Tutor</option>
-</select>
-<button class="w-full bg-blue-600 text-white py-2 rounded">Update User</button>
-<a href="users.php" class="block text-center mt-2 text-gray-600">Back</a>
-</form>
+
+<body class="bg-gray-50 min-h-screen flex items-center justify-center px-4">
+
+<div class="w-full max-w-md bg-white rounded-2xl shadow-lg p-8">
+
+    <h1 class="text-3xl font-bold text-gray-900 mb-6 text-center">Edit User</h1>
+
+    <?php if($error): ?>
+    <div class="bg-red-100 text-red-700 p-3 rounded mb-4 text-sm text-center">
+        <?php echo $error; ?>
+    </div>
+    <?php endif; ?>
+
+    <form method="POST" class="space-y-5">
+
+        <input type="text" name="name" placeholder="Name" value="<?php echo htmlspecialchars($user['name']); ?>" required
+            class="w-full border border-gray-300 rounded-lg px-4 py-3 focus:ring-2 focus:ring-blue-500 focus:outline-none"/>
+
+        <input type="email" name="email" placeholder="Email" value="<?php echo htmlspecialchars($user['email']); ?>" required
+            class="w-full border border-gray-300 rounded-lg px-4 py-3 focus:ring-2 focus:ring-blue-500 focus:outline-none"/>
+
+        <input type="password" name="password" placeholder="Password (leave blank to keep)" 
+            class="w-full border border-gray-300 rounded-lg px-4 py-3 focus:ring-2 focus:ring-blue-500 focus:outline-none"/>
+
+        <select name="role" required
+            class="w-full border border-gray-300 rounded-lg px-4 py-3 focus:ring-2 focus:ring-blue-500 focus:outline-none">
+            <option value="admin" <?php if($user['role']==='admin') echo 'selected'; ?>>Admin</option>
+            <option value="tutor" <?php if($user['role']==='tutor') echo 'selected'; ?>>Tutor</option>
+            <option value="student" <?php if($user['role']==='student') echo 'selected'; ?>>Student</option>
+        </select>
+
+        <button class="w-full bg-blue-600 text-white font-medium py-3 rounded-lg hover:bg-blue-700 transition">Update User</button>
+
+        <a href="users.php" class="block text-center mt-3 text-gray-600 hover:underline">Back</a>
+    </form>
 </div>
+
 </body>
 </html>

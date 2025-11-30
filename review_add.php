@@ -64,19 +64,33 @@ if($_SERVER['REQUEST_METHOD']==='POST' && isset($_POST['rating'], $_POST['commen
 <title>Add Review</title>
 <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body class="bg-gray-100 min-h-screen flex items-center justify-center">
-<div class="w-full max-w-md bg-white rounded shadow p-6">
-<h1 class="text-2xl font-semibold mb-4">Add Review for <?php echo htmlspecialchars($tutor_name); ?></h1>
-<?php if($error): ?><div class="bg-red-100 text-red-700 p-3 rounded mb-4"><?php echo $error;?></div><?php endif; ?>
-<form method="POST" class="space-y-4">
-    <label class="block">Rating (1-5)</label>
-    <input type="number" name="rating" min="1" max="5" required class="w-full border rounded px-3 py-2"/>
-    <label class="block">Comment</label>
-    <textarea name="comment" placeholder="Write your feedback" required class="w-full border rounded px-3 py-2"></textarea>
-    <input type="hidden" name="booking_id" value="<?php echo $booking_id; ?>"/>
-    <button class="w-full bg-green-600 text-white py-2 rounded">Submit Review</button>
-    <a href="reviews.php" class="block text-center mt-2 text-gray-600">Back</a>
-</form>
+<body class="bg-gray-50 min-h-screen flex items-center justify-center p-6">
+
+<div class="w-full max-w-lg bg-white rounded-2xl shadow-lg p-8">
+    <h1 class="text-3xl font-bold mb-6 text-gray-900 text-center">
+        Add Review for <?php echo htmlspecialchars($tutor_name); ?>
+    </h1>
+
+    <?php if($error): ?>
+    <div class="bg-red-100 text-red-700 p-4 rounded mb-4"><?php echo $error;?></div>
+    <?php endif; ?>
+
+    <form method="POST" class="space-y-5">
+        <input type="number" name="rating" min="1" max="5" placeholder="Rating (1-5)" required
+            class="w-full border rounded-lg px-4 py-3 focus:ring-2 focus:ring-green-500 focus:outline-none"/>
+
+        <textarea name="comment" placeholder="Write your feedback" required
+            class="w-full border rounded-lg px-4 py-3 focus:ring-2 focus:ring-green-500 focus:outline-none"></textarea>
+
+        <input type="hidden" name="booking_id" value="<?php echo $booking_id; ?>"/>
+
+        <button class="w-full bg-green-600 text-white py-3 rounded-lg font-medium hover:bg-green-700 transition">
+            Submit Review
+        </button>
+
+        <a href="reviews.php" class="block text-center mt-3 text-gray-600 hover:underline">Back</a>
+    </form>
 </div>
+
 </body>
 </html>

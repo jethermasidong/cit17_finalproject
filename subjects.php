@@ -12,31 +12,44 @@ $res = mysqli_query($conn, "SELECT * FROM subjects ORDER BY subject_name ASC");
 <title>Subjects</title>
 <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body class="bg-gray-100 min-h-screen p-6">
+
+<body class="bg-gray-50 min-h-screen p-10">
+
 <div class="max-w-6xl mx-auto">
-<div class="flex justify-between items-center mb-4">
-<h1 class="text-2xl font-bold">Subjects</h1>
-<div>
-<a href="subjects_add.php" class="px-4 py-2 bg-green-600 text-white rounded">Add Subject</a>
-<a href="admin.php" class="ml-2 px-4 py-2 bg-gray-200 rounded">Back</a>
+
+    <!-- HEADER -->
+    <div class="flex justify-between items-center mb-8">
+        <h1 class="text-4xl font-bold text-gray-900">Subjects</h1>
+        <div>
+            <a href="subjects_add.php" class="px-5 py-3 bg-green-600 text-white font-medium rounded-lg hover:bg-green-700 transition">Add Subject</a>
+            <a href="admin.php" class="ml-3 px-5 py-3 bg-gray-200 font-medium rounded-lg hover:bg-gray-300 transition">Back</a>
+        </div>
+    </div>
+
+    <!-- SUBJECTS TABLE -->
+    <div class="bg-white rounded-2xl shadow overflow-auto">
+        <table class="w-full text-base">
+            <thead class="bg-gray-100 text-gray-700 uppercase text-left">
+                <tr>
+                    <th class="p-4">Subject</th>
+                    <th class="p-4">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php while($row = mysqli_fetch_assoc($res)): ?>
+                <tr class="border-t hover:bg-gray-50 transition">
+                    <td class="p-4"><?php echo htmlspecialchars($row['subject_name']); ?></td>
+                    <td class="p-4">
+                        <a href="subject_edit.php?id=<?php echo $row['subject_id']; ?>" class="text-blue-600 font-medium hover:underline mr-3">Edit</a>
+                        <a href="subject_delete.php?id=<?php echo $row['subject_id']; ?>" class="text-red-600 font-medium hover:underline" onclick="return confirm('Delete subject?')">Delete</a>
+                    </td>
+                </tr>
+                <?php endwhile; ?>
+            </tbody>
+        </table>
+    </div>
+
 </div>
-</div>
-<div class="bg-white rounded shadow overflow-auto">
-<table class="w-full text-sm">
-<thead class="bg-gray-50"><tr><th class="p-2">Subject</th><th>Action</th></tr></thead>
-<tbody>
-<?php while($row = mysqli_fetch_assoc($res)): ?>
-<tr class="border-t">
-<td class="p-2"><?php echo htmlspecialchars($row['subject_name']); ?></td>
-<td class="p-2">
-<a href="subject_edit.php?id=<?php echo $row['subject_id']; ?>" class="text-blue-600 mr-2">Edit</a>
-<a href="subject_delete.php?id=<?php echo $row['subject_id']; ?>" class="text-red-600" onclick="return confirm('Delete subject?')">Delete</a>
-</td>
-</tr>
-<?php endwhile; ?>
-</tbody>
-</table>
-</div>
-</div>
+
 </body>
 </html>

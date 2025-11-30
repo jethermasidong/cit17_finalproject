@@ -26,24 +26,43 @@ if ($_SERVER['REQUEST_METHOD']==='POST') {
 <title>Add User</title>
 <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body class="bg-gray-100 min-h-screen flex items-center justify-center">
-<div class="w-full max-w-md bg-white rounded shadow p-6">
-<h1 class="text-2xl font-semibold mb-4">Add User</h1>
-<?php if($error): ?>
-<div class="bg-red-100 text-red-700 p-3 rounded mb-4"><?php echo $error; ?></div>
-<?php endif; ?>
-<form method="POST" class="space-y-4">
-<input type="text" name="name" placeholder="Name" required class="w-full border rounded px-3 py-2"/>
-<input type="email" name="email" placeholder="Email" required class="w-full border rounded px-3 py-2"/>
-<input type="password" name="password" placeholder="Password" required class="w-full border rounded px-3 py-2"/>
-<select name="role" required class="w-full border rounded px-3 py-2">
-<option value="admin">Admin</option>
-<option value="tutor">Tutor</option>
-<option value="student">Student</option> <!-- Added student role -->
-</select>
-<button class="w-full bg-green-600 text-white py-2 rounded">Add User</button>
-<a href="users.php" class="block text-center mt-2 text-gray-600">Back</a>
-</form>
+
+<body class="bg-gray-50 min-h-screen flex items-center justify-center px-4">
+
+<div class="w-full max-w-md bg-white rounded-2xl shadow-lg p-8">
+
+    <h1 class="text-3xl font-bold text-gray-900 mb-6 text-center">Add User</h1>
+
+    <?php if($error): ?>
+    <div class="bg-red-100 text-red-700 p-3 rounded mb-4 text-sm text-center">
+        <?php echo $error; ?>
+    </div>
+    <?php endif; ?>
+
+    <form method="POST" class="space-y-5">
+
+        <input type="text" name="name" placeholder="Name" required
+            class="w-full border border-gray-300 rounded-lg px-4 py-3 focus:ring-2 focus:ring-green-500 focus:outline-none"/>
+
+        <input type="email" name="email" placeholder="Email" required
+            class="w-full border border-gray-300 rounded-lg px-4 py-3 focus:ring-2 focus:ring-green-500 focus:outline-none"/>
+
+        <input type="password" name="password" placeholder="Password" required
+            class="w-full border border-gray-300 rounded-lg px-4 py-3 focus:ring-2 focus:ring-green-500 focus:outline-none"/>
+
+        <select name="role" required
+            class="w-full border border-gray-300 rounded-lg px-4 py-3 focus:ring-2 focus:ring-green-500 focus:outline-none">
+            <option value="admin">Admin</option>
+            <option value="tutor">Tutor</option>
+            <option value="student">Student</option>
+        </select>
+
+        <button class="w-full bg-green-600 text-white font-medium py-3 rounded-lg hover:bg-green-700 transition">Add User</button>
+
+        <a href="users.php" class="block text-center mt-3 text-gray-600 hover:underline">Back</a>
+    </form>
+
 </div>
+
 </body>
 </html>

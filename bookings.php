@@ -31,7 +31,6 @@ if($role === 'admin'){
         ORDER BY b.created_at DESC
     ");
 } else {
-    // For tutors, show only bookings where they are the tutor
     $res = mysqli_query($conn, "
         SELECT b.booking_id, b.status AS booking_status, u.name AS student_name, t.name AS tutor_name,
                sub.subject_name, ts.day_of_week, ts.start_time, ts.end_time
@@ -52,46 +51,81 @@ if($role === 'admin'){
 <title>Bookings</title>
 <script src="https://cdn.tailwindcss.com"></script>
 </head>
+
 <body class="bg-gray-100 min-h-screen p-6">
-<div class="max-w-6xl mx-auto">
-<h1 class="text-2xl font-bold mb-4">Bookings</h1>
-<div class="bg-white rounded shadow overflow-auto">
-<table class="w-full text-sm">
-<thead class="bg-gray-50">
-<tr>
-<th class="p-2">Booking ID</th>
-<th class="p-2">Student</th>
-<th class="p-2">Tutor</th>
-<th class="p-2">Subject</th>
-<th class="p-2">Schedule</th>
-<th class="p-2">Booking Status</th>
-<th class="p-2">Action</th>
-</tr>
-</thead>
-<tbody>
-<?php while($row=mysqli_fetch_assoc($res)): ?>
-<tr class="border-t">
-<td class="p-2"><?php echo $row['booking_id'];?></td>
-<td class="p-2"><?php echo htmlspecialchars($row['student_name']);?></td>
-<td class="p-2"><?php echo htmlspecialchars($row['tutor_name']);?></td>
-<td class="p-2"><?php echo htmlspecialchars($row['subject_name']);?></td>
-<td class="p-2"><?php echo $row['day_of_week']." ".$row['start_time']."-".$row['end_time'];?></td>
-<td class="p-2"><?php echo ucfirst($row['booking_status']);?></td>
-<td class="p-2">
-<?php if($role==='admin'): ?>
-<a href="bookings_edit.php?id=<?php echo $row['booking_id'];?>" class="text-blue-600 mr-2">Edit</a>
-<a href="bookings_delete.php?id=<?php echo $row['booking_id'];?>" class="text-red-600" onclick="return confirm('Delete booking?')">Delete</a>
-<?php endif; ?>
-</td>
-</tr>
-<?php endwhile;?>
-</tbody>
-</table>
+
+<div class="max-w-7xl mx-auto">
+
+    <h1 class="text-3xl font-bold mb-6 text-gray-800">Bookings</h1>
+
+    <!-- TABLE CONTAINER -->
+    <div class="bg-white rounded-xl shadow-lg overflow-auto border border-gray-200">
+
+        <table class="w-full text-base">
+            <thead class="bg-gray-100 border-b border-gray-200">
+                <tr>
+                    <th class="p-4 text-left font-semibold text-gray-700">Booking ID</th>
+                    <th class="p-4 text-left font-semibold text-gray-700">Student</th>
+                    <th class="p-4 text-left font-semibold text-gray-700">Tutor</th>
+                    <th class="p-4 text-left font-semibold text-gray-700">Subject</th>
+                    <th class="p-4 text-left font-semibold text-gray-700">Schedule</th>
+                    <th class="p-4 text-left font-semibold text-gray-700">Status</th>
+                    <th class="p-4 text-left font-semibold text-gray-700">Action</th>
+                </tr>
+            </thead>
+
+            <tbody>
+            <?php while($row = mysqli_fetch_assoc($res)): ?>
+                <tr class="border-b hover:bg-gray-50 transition">
+                    <td class="p-4"><?php echo $row['booking_id']; ?></td>
+                    <td class="p-4"><?php echo htmlspecialchars($row['student_name']); ?></td>
+                    <td class="p-4"><?php echo htmlspecialchars($row['tutor_name']); ?></td>
+                    <td class="p-4"><?php echo htmlspecialchars($row['subject_name']); ?></td>
+                    <td class="p-4">
+                        <?php echo $row['day_of_week']." ".$row['start_time']." - ".$row['end_time']; ?>
+                    </td>
+                    <td class="p-4">
+                        <span class="px-3 py-1 rounded-full text-white
+                            <?php echo $row['booking_status']=='pending'?'bg-yellow-500':
+                                       ($row['booking_status']=='approved'?'bg-green-600':'bg-red-600'); ?>">
+                            <?php echo ucfirst($row['booking_status']); ?>
+                        </span>
+                    </td>
+
+                    <td class="p-4">
+                        <?php if($role==='admin'): ?>
+                            <a href="bookings_edit.php?id=<?php echo $row['booking_id']; ?>" 
+                               class="text-blue-600 font-medium hover:underline mr-3">
+                               Edit
+                            </a>
+                            <a href="bookings_delete.php?id=<?php echo $row['booking_id']; ?>" 
+                               class="text-red-600 font-medium hover:underline"
+                               onclick="return confirm('Delete booking?')">
+                               Delete
+                            </a>
+                        <?php endif; ?>
+                    </td>
+                </tr>
+            <?php endwhile; ?>
+            </tbody>
+        </table>
+
+    </div>
+
+    <!-- BUTTONS -->
+    <?php if($role==='admin'): ?>
+        <a href="bookings_create.php" 
+           class="inline-block mt-6 px-5 py-2 bg-green-600 text-white rounded-lg shadow hover:bg-green-700 transition">
+           Add Booking
+        </a>
+    <?php endif; ?>
+
+    <a href="<?php echo $role==='admin'?'admin.php':($role==='tutor'?'teacher.php':'index.php');?>" 
+       class="block mt-4 text-gray-600 hover:underline">
+       ← Back
+    </a>
+
 </div>
-<?php if($role==='admin'): ?>
-<a href="bookings_create.php" class="inline-block mt-4 px-4 py-2 bg-green-600 text-white rounded">Add Booking</a>
-<?php endif;?>
-<a href="<?php echo $role==='admin'?'admin.php':($role==='tutor'?'teacher.php':'index.php');?>" class="block mt-4 text-gray-600">Back</a>
-</div>
+
 </body>
 </html>
